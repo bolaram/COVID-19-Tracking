@@ -1,2 +1,4 @@
 # COVID-19-Tracking
 This COVID-19 graph plots the number of new confirmed cases in the past week, versus the total number of confirmed cases.  When plotted in this way, exponential growth is displayed as a straight line.  Notice that most countries follow a similar straight line path, indicating that the growth rate is similar across countries. We're all in this together.
+
+World data provided by <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins University</a> &middot; US state data provided by <a href="https://github.com/nytimes/covid-19-data">NYTimes</a> (updated daily around 16:00 UTC / 12:00 ET)&middot; Shortcuts: +/- for daily changes, space to play/pause &middot; Source</a> &middot; <a href="https://www.cdc.gov/coronavirus/2019-ncov/prepare/prevention.html">Stay safe!</a>
