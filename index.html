@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Covid Trends</title>
+  <link rel="stylesheet" type="text/css" href="normalize.css">
+  <link rel="stylesheet" type="text/css" href="style.css?2">
+  <script src="libraries/plotly-basic.min.js"></script>
+  <script src="libraries/vue.min.js"></script>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta property="og:image" content="https://aatishb.com/covidtrends/logos/covid-trends-logo-nowords.png" />
+  <meta property="og:description" content="Visualizing the exponential growth of COVID-19 across the world." />
+</head>
+<body>
+
+  <div id="root">
+
+    <header>
+
+        <div class="explainer">
+          <p>This interactive charts the <b><i>new</i></b> {{selectedData.toLowerCase()}} of COVID-19 in the past week vs. the <b><i>total</i></b> {{selectedData.toLowerCase()}} to date. When plotted in this way, exponential growth is represented as a straight line that slopes upwards. Notice that almost all countries follow a very similar path of exponential growth. </p>
+
+        </div>
+
+        <div class="logowrapper">
+
+          <h1><a href="https://bolaram.xyz">Pendamic COVID-19</a></h1>
+        </div>
+
+    </header>
+
+    <div class="ctapp">
+
+      <main id="main">
+
+        <graph v-if="covidData.length > 0" :graph-data="graphData" :day="day" :resize="isHidden" v-bind.sync="graphAttributes"></graph>
+
+        <div v-if="covidData.length > 0" class="nav">
+
+          <div class="navelement">
+            <img v-if="paused" @click="play" src="icons/play.svg" alt="Play" style="width: 3rem;">
+            <img v-if="!paused" @click="play" src="icons/pause.svg" alt="Pause" style="width: 3rem;">
+          </div>
+
+          <div class="navelement">
+            <time class="h2" :datetime="formatDate(minDay > 0 ? dates[day - 1] : dates[dates.length - 1])">{{ formatDate(minDay > 0 ? dates[day - 1] : dates[dates.length - 1]) }}</time>
+          </div>
+
+          <div class="navelement slidercontainer">
+            <input v-if="dates.length > 7" type="range" :min="minDay > 0 ? minDay : dates.length" :max="dates.length" step="1" v-model="day" class="slider" @mousedown="pause" aria-label="Choose the current observation day">
+          </div>
+
+          <div class="navelement">
+            <select v-model="selectedScale" @mousedown="pause" aria-Label="Select Scale">
+              <option v-for="s in scale" v-bind:value="s">
+                {{ s }}
+              </option>
+            </select>
+          </div>
+
+        </div>
+
+        <div v-if="!firstLoad && covidData.length == 0" class="nodata"><span>Not enough data for these parameters.</span></div>
+
+        <footer>
+          Created by <a href="https://github.com/bolaram">Bolaram paul</a> &middot; World data provided by <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins University</a> (updated daily around 00:00 UTC / 20:00 ET) &middot; US state data provided by <a href="https://github.com/nytimes/covid-19-data">NYTimes</a> (updated daily around 16:00 UTC / 12:00 ET)&middot; Shortcuts: +/- for daily changes, space to play/pause &middot; Source</a> &middot; <a href="https://www.cdc.gov/coronavirus/2019-ncov/prepare/prevention.html">Stay safe!</a>
+        </footer>
+
+      </main>
+
+      <aside>
+
+        <div>
+          <h2>Customize</h2>
+          <label for="selectedData">Select Parameter</label>
+          <select id="selectedData" v-model="selectedData" @mousedown="pause">
+            <option v-for="d in dataTypes" v-bind:value="d">
+              {{ d }}
+            </option>
+          </select>
+          <label for="selectedRegion">Select Region</label>
+          <select id="selectedRegion" v-model="selectedRegion" @mousedown="pause">
+            <option v-for="s in regions" v-bind:value="s">
+              {{ s }}
+            </option>
+          </select>
+          <label for="selectedScale">Select Scale</label>
+          <select id="selectedScale" v-model="selectedScale" @mousedown="pause">
+            <option v-for="s in scale" v-bind:value="s">
+              {{ s }}
+            </option>
+          </select>
+          <input type="checkbox" style="margin-top: 0.75rem;" id="showLabels" v-model="showLabels">
+          <label for="showLabels">Show Labels</label>
+
+          <div>
+            <input type="checkbox" style="margin-top: 0.75rem;" id="showTrendLine" v-model="showTrendLine">
+            <label for="showTrendLine">Show
+                <select style="width: 3rem; min-width: 2rem; padding: 0rem; font-size: 0.75rem;" v-model="doublingTime" @mousedown="pause">
+                  <option v-for="d in doublingTimes" v-bind:value="d">
+                    {{ d }}
+                  </option>
+                </select>
+               Day Doubling Time</label>
+          </div>
+
+        </div>
+
+        <div class="countries">
+
+          <h2>{{regionType}}</h2>
+
+          <div class="search">
+            <input id="searchField" v-model="searchField" placeholder="Search For A Location" aria-label="Search For A Location">
+          </div>
+
+          <div class="buttonwrapper">
+            <button @click="deselectAll" aria-Label="Deselect All Regions">Deselect All</button>
+            <button @click="selectAll" aria-Label="Select All Regions">Select All</button>
+          </div>
+
+          <p style="padding-top: 1rem;">Showing {{regionType}} with at least {{minCasesInCountry}} {{selectedData}}</p>
+
+          <ul>
+            <li v-for="country in visibleCountries">
+              <input type="checkbox" :id="country" :value="country" v-model="selectedCountries">
+              <label :for="country">{{country}}</label>
+            </li>
+          </ul>
+
+        </div>
+
+        <div>
+
+          <div class="buttonwrapper">
+            <button @click="createURL" @mousedown="pause">{{copied ? 'Link Copied to Clipboard!' : 'Create Shareable Link'}}</button>
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+  <!-- page code -->
+  <script src="vue-definitions.js?3"></script>
+
+</body>
+
+</html>

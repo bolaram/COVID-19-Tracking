@@ -1,0 +1,293 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body,
+.plotly-notifier {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  font-size:1em;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #444;
+
+  text-rendering: optimizeLegibility;
+}
+
+
+h1 {
+  margin:0px; /* was 20 px */
+  /*
+  text-align:center;*/
+  font-weight:100;
+  font-size:2rem;
+}
+
+h2,
+.h2 {
+  margin:0px;
+  font-weight:700;
+  font-size: 1.5rem;
+  margin-bottom:1rem;
+}
+
+h3 {
+  text-align:center;
+  font-weight:400;
+  font-size:1.2rem;
+}
+
+h1, h2, .h2, h3 {
+  line-height: 1.1;
+}
+
+b {
+  font-weight: bold;
+}
+
+i {
+  font-style: italic;
+}
+
+p {
+  font-size: 1rem;
+}
+
+.logowrapper {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 10rem;
+}
+
+.logowrapper a {
+  text-decoration: none; /* no underline */
+  color: white;
+}
+
+.logowrapper h1 {
+  text-align: center;
+}
+
+.logos {
+  margin-top:1rem;
+}
+
+.logos > a:first-child {
+  margin-right: 0.75rem;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#title {
+  flex: 1;
+}
+
+header {
+  color: white;
+  background-image: linear-gradient(to bottom, #2c003e, #721b65);
+  position: relative;
+  display: flex;
+  padding: 0.75rem;
+  flex-shrink: 0
+}
+
+.explainer {
+  flex: 6;
+  padding-right: 2rem;
+  text-align: left;
+}
+
+.explainer a {
+  text-decoration: underline;
+  color: lightgoldenrodyellow;
+  cursor: pointer;
+}
+
+.explainer p {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.explainer > p:first-child {
+  margin-top: 0;
+}
+
+.ctapp {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ctapp h2,
+.ctapp .h2 {
+  color: #fe346e;
+}
+
+main {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+aside {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  background-color: #fcf8e8;
+  padding: 1rem;
+  min-width: 10rem;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+aside > div {
+  margin-bottom: 2rem;
+}
+
+aside > div:last-child {
+  margin-bottom: 0;
+}
+
+.countries {
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+aside h2 {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+footer {
+  font-size: 0.75rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.navelement {
+  padding: 1rem;
+  text-align: center;
+  margin: auto;
+}
+
+.navelement > h2 {
+  margin-bottom: 0;
+  margin: auto;
+}
+
+.slidercontainer {
+  flex-grow: 1;
+}
+
+.slider {
+  width: 100%;
+  min-width: 200px;
+}
+
+svg {
+  fill: #fe346e;
+}
+
+#hide {
+  font-size: 1rem;
+  padding: 0.5rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.search {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  min-width: 10rem;
+}
+
+.search > input {
+  flex: 1;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.buttonwrapper {
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  justify-content: space-between;
+}
+
+button {
+  padding: 0.3rem;
+  margin: auto;
+  font-size: 1rem;
+
+  text-align: center;
+  text-decoration: none;
+
+  transition-duration: 0.4s;
+
+  background-color: #721b65;
+  color: lightgoldenrodyellow;
+  border: 0.125rem solid #721b65;
+  border-radius: 0.25rem;
+}
+
+button:hover {
+  background-color: rgb(69,10,76);
+  border: 0.125rem solid rgb(69,10,76);
+  color: lemonchiffon;
+}
+
+.countries button {
+  margin-top: 0.5rem;
+}
+.countries p {
+  margin-bottom: 0.75rem;
+}
+
+select {
+  min-width: 12rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+select:first-child {
+  margin-top: 0;
+}
+
+.nodata {
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
